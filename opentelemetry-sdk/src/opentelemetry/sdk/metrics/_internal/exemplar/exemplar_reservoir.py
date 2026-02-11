@@ -82,6 +82,30 @@ class ExemplarReservoir(ABC):
         )
 
 
+class NoOpExemplarReservoir(ExemplarReservoir):
+    """A no-op reservoir that stores no exemplars.
+
+    This reservoir is used when the exemplar filter is ``AlwaysOffExemplarFilter``,
+    avoiding the overhead of maintaining buckets, locks, and storage when no
+    exemplars will ever be collected.
+    """
+
+    def __init__(self, **kwargs) -> None:
+        pass
+
+    def offer(
+        self,
+        value: Union[int, float],
+        time_unix_nano: int,
+        attributes: Attributes,
+        context: Context,
+    ) -> None:
+        pass
+
+    def collect(self, point_attributes: Attributes) -> List[Exemplar]:
+        return []
+
+
 class ExemplarBucket:
     def __init__(self) -> None:
         self.__value: Union[int, float] = 0

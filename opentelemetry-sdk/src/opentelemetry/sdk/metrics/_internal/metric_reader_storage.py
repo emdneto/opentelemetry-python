@@ -105,6 +105,7 @@ class MetricReaderStorage:
                         instrument_class_aggregation=(
                             self._instrument_class_aggregation
                         ),
+                        exemplar_filter=self._sdk_config.exemplar_filter,
                     )
                 )
             self._instrument_view_instrument_matches[instrument] = (
@@ -266,6 +267,7 @@ class MetricReaderStorage:
                 instrument_class_aggregation=(
                     self._instrument_class_aggregation
                 ),
+                exemplar_filter=self._sdk_config.exemplar_filter,
             )
 
             for (

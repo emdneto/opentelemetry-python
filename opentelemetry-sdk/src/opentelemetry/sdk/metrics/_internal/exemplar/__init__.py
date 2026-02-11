@@ -23,6 +23,7 @@ from .exemplar_reservoir import (
     AlignedHistogramBucketExemplarReservoir,
     ExemplarReservoir,
     ExemplarReservoirBuilder,
+    NoOpExemplarReservoir,
     SimpleFixedSizeExemplarReservoir,
 )
 
@@ -35,5 +36,6 @@ __all__ = [
     "AlignedHistogramBucketExemplarReservoir",
     "ExemplarReservoir",
     "ExemplarReservoirBuilder",
+    "NoOpExemplarReservoir",
     "SimpleFixedSizeExemplarReservoir",
 ]

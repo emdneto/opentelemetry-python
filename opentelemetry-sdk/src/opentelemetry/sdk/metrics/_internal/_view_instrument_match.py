@@ -25,6 +25,11 @@ from opentelemetry.sdk.metrics._internal.aggregation import (
     _Aggregation,
     _SumAggregation,
 )
+from opentelemetry.sdk.metrics._internal.exemplar import (
+    AlwaysOffExemplarFilter,
+    ExemplarFilter,
+    NoOpExemplarReservoir,
+)
 from opentelemetry.sdk.metrics._internal.export import AggregationTemporality
 from opentelemetry.sdk.metrics._internal.measurement import Measurement
 from opentelemetry.sdk.metrics._internal.point import DataPointT
@@ -33,12 +38,18 @@ from opentelemetry.sdk.metrics._internal.view import View
 _logger = getLogger(__name__)
 
 
+def _noop_reservoir_factory(aggregation_type):
+    """Reservoir factory that always returns a NoOpExemplarReservoir."""
+    return NoOpExemplarReservoir
+
+
 class _ViewInstrumentMatch:
     def __init__(
         self,
         view: View,
         instrument: Instrument,
         instrument_class_aggregation: Dict[type, Aggregation],
+        exemplar_filter: Optional[ExemplarFilter] = None,
     ):
         self._view = view
         self._instrument = instrument
@@ -49,11 +60,20 @@ class _ViewInstrumentMatch:
         self._description = (
             self._view._description or self._instrument.description
         )
+
+        # When the exemplar filter is AlwaysOff, short-circuit to a no-op
+        # reservoir to avoid allocation and per-measurement overhead.
+        if isinstance(exemplar_filter, AlwaysOffExemplarFilter):
+            exemplar_reservoir_factory = _noop_reservoir_factory
+        else:
+            exemplar_reservoir_factory = self._view._exemplar_reservoir_factory
+        self._exemplar_reservoir_factory = exemplar_reservoir_factory
+
         if not isinstance(self._view._aggregation, DefaultAggregation):
             self._aggregation = self._view._aggregation._create_aggregation(
                 self._instrument,
                 None,
-                self._view._exemplar_reservoir_factory,
+                self._exemplar_reservoir_factory,
                 0,
             )
         else:
@@ -62,7 +82,7 @@ class _ViewInstrumentMatch:
             ]._create_aggregation(
                 self._instrument,
                 None,
-                self._view._exemplar_reservoir_factory,
+                self._exemplar_reservoir_factory,
                 0,
             )
 
@@ -114,7 +134,7 @@ class _ViewInstrumentMatch:
                             self._view._aggregation._create_aggregation(
                                 self._instrument,
                                 attributes,
-                                self._view._exemplar_reservoir_factory,
+                                self._exemplar_reservoir_factory,
                                 time_ns(),
                             )
                         )
@@ -124,7 +144,7 @@ class _ViewInstrumentMatch:
                         ]._create_aggregation(
                             self._instrument,
                             attributes,
-                            self._view._exemplar_reservoir_factory,
+                            self._exemplar_reservoir_factory,
                             time_ns(),
                         )
                     self._attributes_aggregation[aggr_key] = aggregation

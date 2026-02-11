@@ -22,6 +22,7 @@ from opentelemetry.sdk.metrics._internal.exemplar import (
     Exemplar,
     ExemplarFilter,
     ExemplarReservoir,
+    NoOpExemplarReservoir,
     SimpleFixedSizeExemplarReservoir,
     TraceBasedExemplarFilter,
 )
@@ -48,6 +49,7 @@ __all__ = [
     "Counter",
     "Histogram",
     "_Gauge",
+    "NoOpExemplarReservoir",
     "ObservableCounter",
     "ObservableGauge",
     "ObservableUpDownCounter",
