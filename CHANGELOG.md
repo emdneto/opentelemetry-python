@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > [!IMPORTANT]
 > We are working on stabilizing the Log signal that would require making deprecations and breaking changes. We will try to reduce the releases that may require an update to your code, especially for instrumentations or for sdk developers.
 
-## Unreleased
+## Version 1.42.0/0.63b0 (2026-04-30)
 
 - `opentelemetry-sdk`: add `additional_properties` support to generated config models via custom `datamodel-codegen` template, enabling plugin/custom component names to flow through typed dataclasses
   ([#5131](https://github.com/open-telemetry/opentelemetry-python/pull/5131))
