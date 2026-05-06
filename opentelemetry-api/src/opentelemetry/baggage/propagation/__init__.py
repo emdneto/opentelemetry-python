@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable, Iterator, Mapping
 from logging import getLogger
 from re import split
-from typing import Iterable, Iterator, Mapping, Optional, Set
 from urllib.parse import quote_plus, unquote_plus
 
 from opentelemetry.baggage import _is_valid_pair, get_all, set_baggage
