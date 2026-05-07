@@ -18,11 +18,6 @@
       "groupName": "docs dependencies"
     },
     {
-      "description": "Group GitHub Actions updates into one PR",
-      "matchManagers": ["github-actions"],
-      "groupName": "github actions",
-    },
-    {
       "groupName": "all patch versions",
       "matchUpdateTypes": ["patch"],
       "schedule": ["before 8am every weekday"]
