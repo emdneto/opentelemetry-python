@@ -8,23 +8,14 @@
   "ignorePaths": [
     "uv.lock",
     "**/*-requirements.*.txt",
-    "**/test-requirements.txt"
+    "**/test-requirements.txt",
+    "**/benchmark-requirements.txt",
   ],
   "packageRules": [
     {
       "description": "Group GitHub Actions updates into one PR",
       "matchManagers": ["github-actions"],
-      "groupName": "github actions",
-      "schedule": ["before 8am on Monday"]
-    },
-    {
-      "groupName": "all patch versions",
-      "matchUpdateTypes": ["patch"],
-      "schedule": ["before 8am every weekday"]
-    },
-    {
-      "matchUpdateTypes": ["minor", "major"],
-      "schedule": ["before 8am on Monday"]
+      "groupName": "github actions"
     },
     {
       "matchManagers": ["pep621"],
