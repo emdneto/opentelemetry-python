@@ -26,8 +26,5 @@
       "matchUpdateTypes": ["minor", "major"],
       "schedule": ["before 8am on Monday"]
     }
-  ],
-  "labels": [
-    "dependencies"
   ]
 }
