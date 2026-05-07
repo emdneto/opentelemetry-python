@@ -21,7 +21,6 @@
       "description": "Group GitHub Actions updates into one PR",
       "matchManagers": ["github-actions"],
       "groupName": "github actions",
-      "schedule": ["before 8am on Monday"]
     },
     {
       "groupName": "all patch versions",
