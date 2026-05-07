@@ -2,24 +2,21 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemver"
+    "helpers:pinGitHubActionDigestsToSemver",
+    "security:only-security-updates"
   ],
   "labels": ["dependencies"],
   "ignorePaths": [
     "uv.lock",
     "**/*-requirements.*.txt",
-    "**/test-requirements.txt",
-    "**/benchmark-requirements.txt"
+    "**/*-requirements.txt",
+    "**/pyproject.toml"
   ],
   "packageRules": [
     {
       "description": "Group GitHub Actions updates into one PR",
       "matchManagers": ["github-actions"],
       "groupName": "github actions"
-    },
-    {
-      "matchManagers": ["pep621"],
-      "enabled": false
     }
   ]
 }
