@@ -8,14 +8,10 @@
   "ignorePaths": [
     "uv.lock",
     "**/*-requirements.*.txt",
-    "**/*-requirements.txt"
+    "**/*-requirements.txt",
+    "**/pyproject.toml"
   ],
   "packageRules": [
-    {
-      "description": "Ignore pyproject.toml everywhere except docs/",
-      "matchFileNames": ["**/pyproject.toml", "!docs/**/pyproject.toml"],
-      "enabled": false
-    },
     {
       "description": "Group all docs/ dependency updates into one PR",
       "matchFileNames": ["docs/**"],
