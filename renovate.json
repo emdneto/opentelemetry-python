@@ -8,14 +8,24 @@
   "ignorePaths": [
     "uv.lock",
     "**/*-requirements.*.txt",
-    "**/*-requirements.txt",
-    "**/pyproject.toml"
+    "**/*-requirements.txt"
   ],
   "packageRules": [
     {
+      "description": "Ignore pyproject.toml everywhere except docs/",
+      "matchFileNames": ["**/pyproject.toml", "!docs/**/pyproject.toml"],
+      "enabled": false
+    },
+    {
+      "description": "Group all docs/ dependency updates into one PR",
+      "matchFileNames": ["docs/**"],
+      "groupName": "docs dependencies"
+    },
+    {
       "description": "Group GitHub Actions updates into one PR",
       "matchManagers": ["github-actions"],
-      "groupName": "github actions"
+      "groupName": "github actions",
+      "schedule": ["before 8am on Monday"]
     },
     {
       "groupName": "all patch versions",
