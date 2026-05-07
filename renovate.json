@@ -9,7 +9,7 @@
     "uv.lock",
     "**/*-requirements.*.txt",
     "**/test-requirements.txt",
-    "**/benchmark-requirements.txt",
+    "**/benchmark-requirements.txt"
   ],
   "packageRules": [
     {
