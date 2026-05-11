@@ -15,21 +15,16 @@
     "**/test-requirements.txt",
     "**/pyproject.toml"
   ],
+  "github-actions": {
+    "managerFilePatterns": [
+      "(^|/)\\.github/workflows/templates/[^/]+\\.yml\\.j2$"
+    ]
+  },
   "packageRules": [
     {
       "matchFileNames": ["docs/**"],
       "groupName": "docs weekly updates",
       "schedule": ["before 4am on Monday"]
-    },
-    {
-      "matchFileNames": [
-        ".github/workflows/ci.yml",
-        ".github/workflows/misc.yml",
-        ".github/workflows/lint.yml",
-        ".github/workflows/test.yml"
-      ],
-      "matchManagers": ["github-actions"],
-      "enabled": false
     },
     {
       "groupName": "build and infra weekly updates",
