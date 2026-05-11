@@ -26,7 +26,7 @@
   },
   "packageRules": [
     {
-      "groupName": "docs updates",
+      "groupName": "docs",
       "matchFileNames": ["docs/**"],
       "separateMajorMinor": false,
       "semanticCommitScope": "docs"
@@ -37,8 +37,9 @@
         "dockerfile",
         "docker-compose"
       ],
-      "groupName": "infra weekly updates",
+      "groupName": "infra",
       "matchUpdateTypes": [
+        "major",
         "minor",
         "patch",
         "pin",
