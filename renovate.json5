@@ -26,15 +26,10 @@
   },
   "packageRules": [
     {
-      "matchFileNames": ["docs/**"],
       "groupName": "docs updates",
+      "matchFileNames": ["docs/**"],
       "separateMajorMinor": false,
       "semanticCommitScope": "docs"
-    },
-    {
-      "groupName": "all patch versions",
-      "matchUpdateTypes": ["patch"],
-      "schedule": ["before 8am every weekday"]
     },
     {
       "matchManagers": [
@@ -42,6 +37,7 @@
         "dockerfile",
         "docker-compose"
       ],
+      "groupName": "infra weekly updates",
       "matchUpdateTypes": [
         "minor",
         "patch",
@@ -49,8 +45,12 @@
         "pinDigest",
         "digest"
       ],
-      "semanticCommitScope": "infra",
-      "groupName": "infra weekly updates"
+      "semanticCommitScope": "infra"
+    },
+    {
+      "groupName": "all patch versions",
+      "matchUpdateTypes": ["patch"],
+      "schedule": ["before 8am every weekday"]
     },
     {
       "matchUpdateTypes": ["minor", "major"],
