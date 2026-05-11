@@ -13,7 +13,7 @@
     "enabled": true
   },
   "ignorePaths": [
-    "**/test-requirements.txt",
+    "**/*-requirements.txt",
     "gen-requirements.txt",
     "dev-requirements.txt",
     "docs-requirements.txt",
