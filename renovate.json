@@ -17,7 +17,7 @@
   ],
   "github-actions": {
     "managerFilePatterns": [
-      "(^|/)\\.github/workflows/templates/[^/]+\\.yml\\.j2$"
+      "/^.github/workflows/templates/.*\\.yml\\.j2$/"
     ]
   },
   "packageRules": [
