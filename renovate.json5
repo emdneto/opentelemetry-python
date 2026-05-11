@@ -28,7 +28,8 @@
     {
       "matchFileNames": ["docs/**"],
       "groupName": "docs updates",
-      "separateMajorMinor": false
+      "separateMajorMinor": false,
+      "semanticCommitScope": "docs"
     },
     {
       "groupName": "all patch versions",
@@ -48,6 +49,7 @@
         "pinDigest",
         "digest"
       ],
+      "semanticCommitScope": "infra",
       "groupName": "infra weekly updates"
     },
     {
