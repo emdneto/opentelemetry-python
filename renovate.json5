@@ -26,6 +26,11 @@
   },
   "packageRules": [
     {
+      "matchFileNames": ["docs/**"],
+      "groupName": "docs updates",
+      "separateMajorMinor": false
+    },
+    {
       "groupName": "all patch versions",
       "matchUpdateTypes": ["patch"],
       "schedule": ["before 8am every weekday"]
