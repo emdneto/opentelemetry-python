@@ -4,26 +4,49 @@
     "config:recommended",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies",
+    "Skip Changelog"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "ignorePaths": [
-    "uv.lock",
-    "**/*-requirements.*.txt",
-    "**/*-requirements.txt",
+    "**/test-requirements.txt",
     "**/pyproject.toml"
   ],
   "packageRules": [
     {
-      "description": "Group all docs/ dependency updates into one PR",
       "matchFileNames": ["docs/**"],
-      "groupName": "docs"
+      "groupName": "docs weekly updates",
+      "schedule": ["before 4am on Monday"]
+    },
+    {
+      "matchFileNames": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/misc.yml",
+        ".github/workflows/lint.yml",
+        ".github/workflows/test.yml"
+      ],
+      "matchManagers": ["github-actions"],
+      "enabled": false
+    },
+    {
+      "groupName": "build and infra weekly updates",
+      "matchManagers": [
+        "github-actions",
+        "dockerfile",
+        "docker-compose"
+      ],
+      "schedule": ["before 5am on Monday"]
     },
     {
       "groupName": "all patch versions",
       "matchUpdateTypes": ["patch"],
-      "schedule": ["before 8am every weekday"]
+      "schedule": ["before 6am every weekday"]
     },
     {
-      "matchUpdateTypes": ["minor", "major"],
+      "matchUpdateTypes": ["minor","major"],
       "schedule": ["before 8am on Monday"]
     }
   ]
