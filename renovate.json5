@@ -2,7 +2,8 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemver"
+    "helpers:pinGitHubActionDigestsToSemver",
+    ":semanticCommits"
   ],
   "labels": [
     "dependencies",
@@ -13,35 +14,39 @@
   },
   "ignorePaths": [
     "**/test-requirements.txt",
+    "gen-requirements.txt",
+    "dev-requirements.txt",
+    "docs-requirements.txt",
     "**/pyproject.toml"
   ],
   "github-actions": {
     "managerFilePatterns": [
-      "/^.github/workflows/templates/.*\\.yml\\.j2$/"
+      "/^\\.github/workflows/templates/.*\\.ya?ml\\.j2$/"
     ]
   },
   "packageRules": [
     {
-      "matchFileNames": ["docs/**"],
-      "groupName": "docs weekly updates",
-      "schedule": ["before 4am on Monday"]
+      "groupName": "all patch versions",
+      "matchUpdateTypes": ["patch"],
+      "schedule": ["before 8am every weekday"]
     },
     {
-      "groupName": "build and infra weekly updates",
       "matchManagers": [
         "github-actions",
         "dockerfile",
         "docker-compose"
       ],
-      "schedule": ["before 5am on Monday"]
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "pinDigest",
+        "digest"
+      ],
+      "groupName": "infra weekly updates"
     },
     {
-      "groupName": "all patch versions",
-      "matchUpdateTypes": ["patch"],
-      "schedule": ["before 6am every weekday"]
-    },
-    {
-      "matchUpdateTypes": ["minor","major"],
+      "matchUpdateTypes": ["minor", "major"],
       "schedule": ["before 8am on Monday"]
     }
   ]
