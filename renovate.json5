@@ -1,69 +1,71 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  extends: [
-    "config:recommended",
-    "helpers:pinGitHubActionDigestsToSemver",
-    ":semanticCommits",
-  ],
-  // Labels automatically applied to Renovate PRs.
-  labels: [
-    "dependencies",
-    "Skip Changelog",
-  ],
-
-  // Keep lock files updated periodically
-  lockFileMaintenance: {
-    enabled: true,
-  },
-
-  // Ignore dependency files managed manually
-  ignorePaths: [
-    "**/*-requirements.txt",
-    "gen-requirements.txt",
-    "dev-requirements.txt",
-    "docs-requirements.txt",
-    "**/pyproject.toml",
-  ],
-
-  // Also scan GitHub Actions workflow templates written as Jinja files.
-  "github-actions": {
-    managerFilePatterns: [
-      "/^\\.github/workflows/templates/.*\\.ya?ml\\.j2$/",
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    extends: [
+      "config:recommended",
+      "helpers:pinGitHubActionDigestsToSemver",
+      ":semanticCommits",
     ],
-  },
-
-  packageRules: [
-    {
-      // Group dependency updates that touch documentation files.
-      groupName: "docs deps",
-      matchFileNames: ["docs/**"],
-      separateMajorMinor: false,
-    },
-    {
-      // Group infrastructure-related updates together.
-      matchManagers: [
-        "github-actions",
-        "dockerfile",
-        "docker-compose",
-      ],
-      groupName: "infra",
-      matchUpdateTypes: [
-        "minor",
-        "patch",
-        "pin",
-        "pinDigest",
-        "digest",
-      ],
-    },
-    {
-      // Group all patch updates together.
-      groupName: "all patch versions",
-      matchUpdateTypes: ["patch"],
-      schedule: ["before 8am every weekday"],
-    },
-    {
-      matchUpdateTypes: ["minor", "major"],
+    labels: [
+      "dependencies",
+      "Skip Changelog",
+    ],
+    lockFileMaintenance: {
+      enabled: true,
       schedule: ["before 8am on Monday"],
     },
-  ],
-}
+    ignorePaths: [
+      "**/*-requirements.txt",
+      "gen-requirements.txt",
+      "dev-requirements.txt",
+      "docs-requirements.txt",
+      "**/pyproject.toml",
+    ],
+    // Also scan GitHub Actions workflow templates written as Jinja files.
+    "github-actions": {
+      managerFilePatterns: [
+        "/^\\.github/workflows/templates/.*\\.ya?ml\\.j2$/",
+      ],
+    },
+    packageRules: [
+      {
+        groupName: "docs deps",
+        matchFileNames: ["docs/**"],
+        separateMajorMinor: false,
+        semanticCommitScope: "docs",
+      },
+      {
+        groupName: "infra",
+        matchManagers: [
+          "github-actions",
+          "dockerfile",
+          "docker-compose",
+        ],
+        matchUpdateTypes: [
+          "patch",
+          "minor",
+          "patch",
+          "pin",
+          "pinDigest",
+          "digest",
+        ],
+        semanticCommitScope: "infra",
+      },
+      {
+        // Group all remaining patch updates together — exclude infra managers
+        // so they stay in the "infra" group above (later rules win in Renovate).
+        groupName: "all patch versions",
+        matchUpdateTypes: ["patch"],
+        matchManagers: [
+          "pep621",
+          "pip_requirements",
+        ],
+        schedule: ["before 8am every weekday"],
+      },
+
+      {
+        // Minor bumps: Monday mornings.
+        matchUpdateTypes: ["minor", "major"],
+        schedule: ["before 8am on Monday"],
+      },
+    ],
+  }
