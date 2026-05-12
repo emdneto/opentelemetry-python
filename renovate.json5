@@ -34,20 +34,11 @@
 
   packageRules: [
     {
-      // Group all patch updates together.
-      groupName: "all patch versions",
-      matchUpdateTypes: ["patch"],
-      schedule: ["before 8am every weekday"],
-    },
-
-    {
       // Group dependency updates that touch documentation files.
-      groupName: "docs",
+      groupName: "docs deps",
       matchFileNames: ["docs/**"],
       separateMajorMinor: false,
-      semanticCommitScope: "docs",
     },
-
     {
       // Group infrastructure-related updates together.
       matchManagers: [
@@ -64,7 +55,12 @@
         "digest",
       ],
     },
-
+    {
+      // Group all patch updates together.
+      groupName: "all patch versions",
+      matchUpdateTypes: ["patch"],
+      schedule: ["before 8am every weekday"],
+    },
     {
       matchUpdateTypes: ["minor", "major"],
       schedule: ["before 8am on Monday"],
