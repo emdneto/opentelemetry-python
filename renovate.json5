@@ -26,6 +26,11 @@
   },
   "packageRules": [
     {
+      "groupName": "all patch versions",
+      "matchUpdateTypes": ["patch"],
+      "schedule": ["before 8am every weekday"]
+    },
+    {
       "groupName": "docs",
       "matchFileNames": ["docs/**"],
       "separateMajorMinor": false,
@@ -39,7 +44,6 @@
       ],
       "groupName": "infra",
       "matchUpdateTypes": [
-        "major",
         "minor",
         "patch",
         "pin",
@@ -48,11 +52,7 @@
       ],
       "semanticCommitScope": "infra"
     },
-    {
-      "groupName": "all patch versions",
-      "matchUpdateTypes": ["patch"],
-      "schedule": ["before 8am every weekday"]
-    },
+
     {
       "matchUpdateTypes": ["minor", "major"],
       "schedule": ["before 8am on Monday"]
