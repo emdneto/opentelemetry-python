@@ -1,61 +1,73 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
+  extends: [
     "config:recommended",
     "helpers:pinGitHubActionDigestsToSemver",
-    ":semanticCommits"
+    ":semanticCommits",
   ],
-  "labels": [
+  // Labels automatically applied to Renovate PRs.
+  labels: [
     "dependencies",
-    "Skip Changelog"
+    "Skip Changelog",
   ],
-  "lockFileMaintenance": {
-    "enabled": true
+
+  // Keep lock files updated periodically
+  lockFileMaintenance: {
+    enabled: true,
   },
-  "ignorePaths": [
+
+  // Ignore dependency files managed manually
+  ignorePaths: [
     "**/*-requirements.txt",
     "gen-requirements.txt",
     "dev-requirements.txt",
     "docs-requirements.txt",
-    "**/pyproject.toml"
+    "**/pyproject.toml",
   ],
+
+  // Also scan GitHub Actions workflow templates written as Jinja files.
   "github-actions": {
-    "managerFilePatterns": [
-      "/^\\.github/workflows/templates/.*\\.ya?ml\\.j2$/"
-    ]
+    managerFilePatterns: [
+      "/^\\.github/workflows/templates/.*\\.ya?ml\\.j2$/",
+    ],
   },
-  "packageRules": [
+
+  packageRules: [
     {
-      "groupName": "all patch versions",
-      "matchUpdateTypes": ["patch"],
-      "schedule": ["before 8am every weekday"]
+      // Group all patch updates together.
+      groupName: "all patch versions",
+      matchUpdateTypes: ["patch"],
+      schedule: ["before 8am every weekday"],
     },
+
     {
-      "groupName": "docs",
-      "matchFileNames": ["docs/**"],
-      "separateMajorMinor": false,
-      "semanticCommitScope": "docs"
+      // Group dependency updates that touch documentation files.
+      groupName: "docs",
+      matchFileNames: ["docs/**"],
+      separateMajorMinor: false,
+      semanticCommitScope: "docs",
     },
+
     {
-      "matchManagers": [
+      // Group infrastructure-related updates together.
+      matchManagers: [
         "github-actions",
         "dockerfile",
-        "docker-compose"
+        "docker-compose",
       ],
-      "groupName": "infra",
-      "matchUpdateTypes": [
+      groupName: "infra",
+      matchUpdateTypes: [
         "minor",
         "patch",
         "pin",
         "pinDigest",
-        "digest"
+        "digest",
       ],
-      "semanticCommitScope": "infra"
     },
 
     {
-      "matchUpdateTypes": ["minor", "major"],
-      "schedule": ["before 8am on Monday"]
-    }
-  ]
+      matchUpdateTypes: ["minor", "major"],
+      schedule: ["before 8am on Monday"],
+    },
+  ],
 }
