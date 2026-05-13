@@ -28,6 +28,16 @@
     },
     packageRules: [
       {
+        groupName: "all patch versions",
+        matchUpdateTypes: ["patch"],
+        schedule: ["before 8am every weekday"],
+      },
+      {
+        // Minor bumps: Monday mornings.
+        matchUpdateTypes: ["minor", "major"],
+        schedule: ["before 8am on Monday"],
+      },
+      {
         groupName: "docs deps",
         matchFileNames: ["docs/**"],
         separateMajorMinor: false,
@@ -49,23 +59,6 @@
           "digest",
         ],
         semanticCommitScope: "infra",
-      },
-      {
-        // Group all remaining patch updates together — exclude infra managers
-        // so they stay in the "infra" group above (later rules win in Renovate).
-        groupName: "all patch versions",
-        matchUpdateTypes: ["patch"],
-        matchManagers: [
-          "pep621",
-          "pip_requirements",
-        ],
-        schedule: ["before 8am every weekday"],
-      },
-
-      {
-        // Minor bumps: Monday mornings.
-        matchUpdateTypes: ["minor", "major"],
-        schedule: ["before 8am on Monday"],
       },
     ],
 }
