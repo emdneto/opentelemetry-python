@@ -33,7 +33,6 @@
         schedule: ["before 8am every weekday"],
       },
       {
-        // Minor bumps: Monday mornings.
         matchUpdateTypes: ["minor", "major"],
         schedule: ["before 8am on Monday"],
       },
