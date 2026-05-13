@@ -52,7 +52,6 @@
         matchUpdateTypes: [
           "patch",
           "minor",
-          "patch",
           "pin",
           "pinDigest",
           "digest",
