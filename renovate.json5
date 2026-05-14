@@ -39,7 +39,6 @@
       {
         groupName: "docs deps",
         matchFileNames: ["docs/**"],
-        separateMajorMinor: false,
         semanticCommitScope: "docs",
       },
       {
@@ -52,7 +51,6 @@
         matchUpdateTypes: [
           "patch",
           "minor",
-          "patch",
           "pin",
           "pinDigest",
           "digest",
